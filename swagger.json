@@ -1,0 +1,411 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Book API",
+    "version": "1.0.0",
+    "description": "API for managing books"
+  },
+  "paths": {
+    "/api/books": {
+      "get": {
+        "summary": "Get all books",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      },
+      "post": {
+        "summary": "Add a book",
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        },
+        "parameters": [
+          {
+            "name": "Book",
+            "in": "body",
+            "description": "Book object",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "description": "Title of the book"
+                },
+                "author": {
+                  "type": "string",
+                  "description": "Author of the book"
+                },
+                "ISBN": {
+                  "type": "string",
+                  "description": "ISBN of the book"
+                },
+                "availableQuantity":{
+                  "type":"integer"
+                },
+                "shelfLocation":{
+                  "type":"string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "/api/books/{id}": {
+      "put": {
+        "summary": "Edit a book by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+
+          {
+            "name": "Book",
+            "in": "body",
+            "description": "Book object",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "description": "Title of the book"
+                },
+                "author": {
+                  "type": "string",
+                  "description": "Author of the book"
+                },
+                "ISBN": {
+                  "type": "string",
+                  "description": "ISBN of the book must be uniq"
+                },
+                "availableQuantity":{
+                  "type":"integer"
+                },
+                "shelfLocation":{
+                  "type":"string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a book by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        }
+      }
+    },
+    "/api/books/search": {
+      "get": {
+        "summary": "Search for books",
+        "parameters": [
+          {
+            "name": "title",
+            "in": "query",
+            "type": "string",
+            "description": "title for books"
+          },
+          {
+            "name": "author",
+            "in": "query",
+            "type": "string",
+            "description": "author for books"
+          },
+          {
+            "name": "ISBN",
+            "in": "query",
+            "type": "string",
+            "description": "ISBN for books"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/api/borrower": {
+      "get": {
+        "summary": "List all borrowers"
+      },
+      "post": {
+        "summary": "Register a borrower",
+        "parameters":[ 
+        {
+          "name": "parameters",
+          "in": "body",
+          "description": "Object containing parameters",
+          "required": true,
+          "schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name of the user"
+              },
+              "email": {
+                "type": "string",
+                "format": "email",
+                "description": "Email of the user"
+              }
+            },
+            "required": ["name", "email"]
+          }
+        }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        }
+      }
+    },
+    "/api/borrower/{id}": {
+      "put": {
+        "summary": "Update a specific borrower by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "parameters",
+            "in": "body",
+            "description": "Object containing parameters",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Name of the user"
+                },
+                "email": {
+                  "type": "string",
+                  "format": "email",
+                  "description": "Email of the user"
+                }
+              },
+              "required": ["name", "email"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "description": "Success message"
+                }
+                
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a specific borrower by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "description": "Success message"
+                }
+                
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error message"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/borrower/checkout": {
+      "post": {
+        "summary": "Borrower checkout"
+      },
+      "parameters": [
+        {
+          "name": "borrowDetails",
+          "in": "body",
+          "description": "Object containing borrowing details",
+          "required": true,
+          "schema": {
+            "type": "object",
+            "properties": {
+              "bookId": {
+                "type": "integer",
+                "description": "ID of the book"
+              },
+              "borrowerId": {
+                "type": "integer",
+                "description": "ID of the borrower"
+              },
+              "dueDate": {
+                "type": "string",
+                "format": "date",
+                "description": "Due date for returning the book (YYYY-MM-DD)"
+              }
+            },
+            "required": ["bookId", "borrowerId", "dueDate"]
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Successful operation",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "description": "Success message"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad request",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "error": {
+                "type": "string",
+                "description": "Error message"
+              }
+            }
+          }
+        }
+      }
+
+    },
+    "/api/borrower/returnBook": {
+      "post": {
+        "summary": "Borrower return book"
+      },
+      "parameters": [
+        {
+          "name": "bookId",
+          "in": "path",
+          "description": "ID of the book to retrieve",
+          "required": true,
+          "type": "integer"
+          
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Successful operation",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "description": "Success message"
+              }
+              
+            }
+          }
+        },
+        "400": {
+          "description": "Bad request",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "error": {
+                "type": "string",
+                "description": "Error message"
+              }
+            }
+          }
+        }
+      }
+    
+    },
+    "/api/borrower/checkedOutBooks/{id}": {
+      "get": {
+        "summary": "Get checked out books by borrower ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "/api/borrower/listOverdueBooks": {
+      "get": {
+        "summary": "List overdue books for borrowers"
+      }
+    },
+    "/api/borrower/generateBorrowingReport": {
+      "get": {
+        "summary": "Generate borrowing report for borrowers"
+      }
+    },
+    "/api/borrower/exportOverdueBorrowsLastMonth": {
+      "get": {
+        "summary": "Export overdue borrows from last month"
+      }
+    },
+    "/api/borrower/exportBorrowingProcessesLastMonth": {
+      "get": {
+        "summary": "Export borrowing processes from last month"
+      }
+    }
+  }
+}
