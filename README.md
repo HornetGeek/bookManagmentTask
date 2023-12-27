@@ -12,9 +12,7 @@ $ sudo docker-compose up --build
 ```
 
 then you can access swagger documentation form this url 
-```sh
-$ 127.0.0.1:3000/api-docs/
-```
+[link-id]: https://www.example.com
 
 and you can run the collection form postman 
 
