@@ -1,7 +1,7 @@
 import { Sequelize } from 'sequelize';
 
 
-const databaseUrl = 'postgres://postgres:password@localhost:5432/book_managment';
+const databaseUrl = 'postgres://postgres:password@postgres:5432/book_managment';
 
 
 export const sequelize = new Sequelize(databaseUrl, {
