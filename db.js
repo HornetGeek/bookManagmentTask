@@ -1,16 +1,16 @@
-const { Sequelize } = require('sequelize');
+import { Sequelize } from 'sequelize';
 
 
-const databaseUrl = 'postgres://postgres:password@postgres:5432/book_managment';
+const databaseUrl = 'postgres://postgres:password@localhost:5432/book_managment';
 
 
-const sequelize = new Sequelize(databaseUrl, {
+export const sequelize = new Sequelize(databaseUrl, {
     dialect: 'postgres', // Specify the database dialect
   });
 
 
 
-const syncModel = async () => {
+export const syncModel = async () => {
     try {
       await sequelize.sync({ force: true }); // Sync the model with the database (you may not want to use force:true in production)
       console.log('Book model synchronized successfully.');
@@ -20,4 +20,3 @@ const syncModel = async () => {
   };
 
 
-module.exports = {sequelize,syncModel };

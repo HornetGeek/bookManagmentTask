@@ -1,11 +1,9 @@
-const { DataTypes } = require('sequelize');
-const {sequelize,syncModel} = require('../db');
+import { DataTypes } from "sequelize";
 
+import { sequelize } from "../db.js";
+import { Book } from "./bookModel.js";
 
-const Book = require('./bookModel');
-
-
-const Borrower = sequelize.define('Borrower', {
+export const Borrower = sequelize.define("Borrower", {
   name: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -25,10 +23,5 @@ const Borrower = sequelize.define('Borrower', {
   },
 });
 
-
-//syncModel();
 Borrower.hasMany(Book);
 Book.belongsTo(Borrower);
-
-
-module.exports = Borrower;

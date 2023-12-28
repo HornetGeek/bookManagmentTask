@@ -1,8 +1,10 @@
-const { DataTypes } = require('sequelize');
-const {sequelize,syncModel} = require('../db');
+import { DataTypes } from "sequelize";
 
+import { sequelize } from "../db.js";
 
-const Book = sequelize.define('Book', {
+export const Book = sequelize.define(
+  "Book",
+  {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -38,19 +40,13 @@ const Book = sequelize.define('Book', {
     dueDate: {
       type: DataTypes.DATE,
     },
-
-  }, {
+  },
+  {
     indexes: [
-     
       {
         unique: true,
-        fields: ['title', "author", "ISBN."] // Creating an index on the 'title, author, ISBN' field
-      }
-    ]
-  });
-
-
-//syncModel();
-
-
-module.exports = Book
+        fields: ["title", "author", "ISBN."], // Creating an index on the 'title, author, ISBN' field
+      },
+    ],
+  }
+);

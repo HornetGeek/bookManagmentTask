@@ -1,37 +1,43 @@
-const express = require('express');
-const borrowerController = require('../controllers/borrowerController')
+import express from "express";
+
+import {
+  listBorrowers,
+  registerBorrower,
+  updateBorrower,
+  deletedBorrower,
+  borrowerCheckout,
+  borrowerReturnBook,
+  listAllBorrowedBooks,
+  listOverdueBooks,
+  generateBorrowingReport,
+  exportLastMonthBorrowed,
+  exportLastMonthOverdue,
+} from "../handlers/borrowers/index.js";
 
 const router = express.Router();
 
+router.get("/", listBorrowers);
 
-router.get('/', borrowerController.listBorrower);
-
-router.post('/',borrowerController.registerBorrower );
-
+router.post("/", registerBorrower);
 
 // Update a specific borrower by ID
-router.put('/:id', borrowerController.updateBorrower);
+router.put("/:id", updateBorrower);
 
 // Delete a specific borrower by ID
-router.delete('/:id', borrowerController.deletedBorrower);
+router.delete("/:id", deletedBorrower);
 
-router.post('/checkout',  borrowerController.borrowerCheckout);
+router.post("/checkout", borrowerCheckout);
 
-router.post('/returnBook',borrowerController.borrowerReturnBook);
+router.post("/returnBook", borrowerReturnBook);
 
+router.get("/checkedOutBooks/:id", listAllBorrowedBooks);
 
-router.get('/checkedOutBooks/:id',  borrowerController.borrowercheckedOutBooks);
+router.get("/listOverdueBooks", listOverdueBooks);
 
-router.get('/listOverdueBooks',borrowerController.listOverdueBooks);
+router.get("/generateBorrowingReport", generateBorrowingReport);
 
+router.get("/exportOverdueBorrowsLastMonth", exportLastMonthOverdue);
 
-router.get('/generateBorrowingReport', borrowerController.generateBorrowingReport);
+router.get("/exportBorrowingProcessesLastMonth", exportLastMonthBorrowed);
 
-
-router.get('/exportOverdueBorrowsLastMonth', borrowerController.exportOverdueBorrowsLastMonth);
-
-
-router.get('/exportBorrowingProcessesLastMonth', borrowerController.exportBorrowingProcessesLastMonth);
-
-
-module.exports = router;
+export default router;
