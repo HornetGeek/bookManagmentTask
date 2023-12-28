@@ -23,5 +23,15 @@ export const Borrower = sequelize.define("Borrower", {
   },
 });
 
+// Synchronize the model with the database (if needed)
+(async () => {
+  try {
+    await sequelize.sync({ force: true }); // Force sync here is just an example, use it carefully in production
+    console.log('All models were synchronized successfully.');
+  } catch (error) {
+    console.error('Error synchronizing models:', error);
+  }
+})();
+
 Borrower.hasMany(Book);
 Book.belongsTo(Borrower);
